@@ -16,14 +16,20 @@ class ProjectController extends Controller
 
         return view('projects.index', compact('featured', 'projects', 'categories'));
     }
-    
+
     public function show($id)
     {
         $project = Project::with('category')->findOrFail($id);
-        
-        return view('projects.show', compact('project'));
+
+        // Ambil proyek-proyek lain dalam kategori yang sama
+        $similarProjects = Project::where('category_id', $project->category_id)
+            ->where('id', '!=', $project->id)
+            ->limit(3)
+            ->get();
+
+        return view('projects.show', compact('project', 'similarProjects'));
     }
-    
+
     public function category($name)
     {
         // Cari kategori berdasarkan nama

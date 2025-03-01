@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->text('features');
             $table->string('thumbnail')->nullable();
             $table->string('url')->nullable();
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();

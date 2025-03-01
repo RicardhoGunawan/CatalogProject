@@ -28,7 +28,9 @@ class ProjectResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                Forms\Components\RichEditor::make('description')
+                Forms\Components\TextInput::make('description')
+                    ->required(),
+                Forms\Components\RichEditor::make('features')
                     ->required(),
 
                 FileUpload::make('thumbnail')
@@ -49,8 +51,11 @@ class ProjectResource extends Resource
                     ->preload()
                     ->required(),
 
-                Forms\Components\TextInput::make('technology')
-                    ->maxLength(255),
+                Forms\Components\Textarea::make('technology')
+                    ->rows(4)
+                    ->placeholder('Pisahkan dengan koma atau enter')
+                    ->maxLength(1000),
+                
 
                 Forms\Components\DatePicker::make('completion_date'),
 
