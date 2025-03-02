@@ -28,9 +28,12 @@
         <div class="relative container mx-auto px-6 md:px-12 h-full flex flex-col md:flex-row items-center">
             <!-- Bagian Kiri (Teks) -->
             <div class="flex-1 md:text-left" data-aos="fade-right">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight mt-6">
-                    My Project Portfolio
+                <h1
+                    class="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-red-500 mb-6 leading-tight mt-6">
+                    codingsalatiga
                 </h1>
+
+
                 <p class="text-lg md:text-xl text-white opacity-90 mb-8 max-w-2xl">
                     Showcasing my creative work and professional expertise in web development.
                 </p>
@@ -47,9 +50,9 @@
             </div>
 
             <!-- Bagian Kanan (Gambar) -->
-            <div class="flex-1 flex justify-center md:justify-end mt-4 md:mt-0 mb-8 md:mb-0"data-aos="fade-left">
+            <div class="flex-1 flex justify-center md:justify-end mt-4 md:mt-0 mb-8 md:mb-0" data-aos="fade-left">
                 <img src="{{ asset('images/catalog_banner.jpg') }}" alt="Catalog Banner" class="max-w-[400px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[500px] rounded-lg shadow-2xl drop-shadow-lg object-cover 
-            transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-3 hover:shadow-3xl">
+                    transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-3 hover:shadow-3xl">
             </div>
 
 
@@ -94,7 +97,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($projects as $project)
                 <div class="project-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden 
-                                                                    transition-transform ease-in-out duration-500 hover:shadow-xl transform hover:scale-105"
+                                                                                    transition-transform ease-in-out duration-500 hover:shadow-xl transform hover:scale-105"
                     data-title="{{ $project->title }}" data-category="{{ $project->category->name }}">
                     <div class="relative">
                         <img src="{{ $project->thumbnail ? asset('storage/' . $project->thumbnail) : asset('images/no-image.png') }}"
