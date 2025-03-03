@@ -14,6 +14,7 @@ class Project extends Model
         'description',
         'features',
         'thumbnail',
+        'gallery',
         'url',
         'category_id',
         'technology',
@@ -24,6 +25,8 @@ class Project extends Model
     protected $casts = [
         'completion_date' => 'date',
         'is_featured' => 'boolean',
+        'gallery' => 'array', 
+
     ];
 
     public function category()

@@ -79,11 +79,17 @@
                     <div class="mb-8" x-data="{ activeTab: 'description' }">
                         <div class="border-b border-gray-200 dark:border-gray-700 mb-4">
                             <nav class="flex space-x-8">
-                                <button @click="activeTab = 'description'" :class="{ 'border-blue-500 text-blue-600 dark:text-blue-400': activeTab === 'description', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300': activeTab !== 'description' }" class="py-3 px-1 border-b-2 font-medium text-sm focus:outline-none">
+                                <button @click="activeTab = 'description'" 
+                                    :class="{ 'border-blue-500 text-blue-600 dark:text-blue-400': activeTab === 'description', 
+                                            'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300': activeTab !== 'description' }" 
+                                    class="py-3 px-1 border-b-2 font-medium text-sm focus:outline-none">
                                     Description
                                 </button>
-                                <button @click="activeTab = 'features'" :class="{ 'border-blue-500 text-blue-600 dark:text-blue-400': activeTab === 'features', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300': activeTab !== 'features' }" class="py-3 px-1 border-b-2 font-medium text-sm focus:outline-none">
-                                    Features
+                                <button @click="activeTab = 'gallery'" 
+                                    :class="{ 'border-blue-500 text-blue-600 dark:text-blue-400': activeTab === 'gallery', 
+                                            'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300': activeTab !== 'gallery' }" 
+                                    class="py-3 px-1 border-b-2 font-medium text-sm focus:outline-none">
+                                    Gallery
                                 </button>
                             </nav>
                         </div>
@@ -95,51 +101,82 @@
                                 {!! nl2br($project->description) !!}
                             </div>
 
-                            {{-- Features tab --}}
-                            <div x-show="activeTab === 'features'" class="space-y-4">
-                                @if(isset($project->features) && !empty(trim($project->features)))
-                                    <div class="prose max-w-none dark:prose-invert">
-                                        {!! nl2br($project->features) !!}
+                            <div x-show="activeTab === 'gallery'" x-cloak class="space-y-4">
+                                @if(isset($project->gallery) && count($project->gallery) > 0)
+                                    <div class="mt-8">
+                                        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">Project Gallery</h3>
+
+                                        <!-- Carousel -->
+                                        <div id="default-carousel" class="relative w-full" data-carousel="slide">
+                                            <!-- Carousel wrapper -->
+                                            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                                                @foreach($project->gallery as $image)
+                                                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                                        <img src="{{ asset('storage/' . $image) }}" 
+                                                            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                                            alt="Project Image">
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <!-- Slider indicators -->
+                                            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                                                @foreach($project->gallery as $index => $image)
+                                                    <button type="button" class="w-3 h-3 rounded-full"
+                                                            aria-label="Slide {{ $index + 1 }}" data-carousel-slide-to="{{ $index }}">
+                                                    </button>
+                                                @endforeach
+                                            </div>
+
+                                            <!-- Slider controls -->
+                                            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                                                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                                                    </svg>
+                                                    <span class="sr-only">Previous</span>
+                                                </span>
+                                            </button>
+                                            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                                                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                                    <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                                    </svg>
+                                                    <span class="sr-only">Next</span>
+                                                </span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Grid Gallery -->
+                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4" x-data="{ activeImage: null }">
+                                            @foreach($project->gallery as $image)
+                                                <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden cursor-pointer"
+                                                    @click="activeImage = '{{ asset('storage/' . $image) }}'">
+                                                    <img src="{{ asset('storage/' . $image) }}" alt="Project image"
+                                                        class="w-full h-full object-cover hover:opacity-90 transition">
+                                                </div>
+                                            @endforeach
+
+                                            <!-- Modal -->
+                                            <div x-show="activeImage" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
+                                                @click="activeImage = null">
+                                                <div class="max-w-4xl w-full max-h-screen p-4" @click.stop>
+                                                    <img :src="activeImage" class="max-h-full mx-auto" alt="Enlarged project image">
+                                                    <button class="absolute top-4 right-4 bg-white rounded-full p-1 shadow-lg"
+                                                            @click="activeImage = null">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                @else
-                                    <ul class="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-400">
-                                        <li>Responsive design for optimal viewing on all devices</li>
-                                        <li>Modern user interface with intuitive navigation</li>
-                                        <li>Optimized performance and loading speed</li>
-                                        <li>Secure data handling and user authentication</li>
-                                        <li>Integration with third-party services</li>
-                                    </ul>
                                 @endif
                             </div>
+
                         </div>
                     </div>
-                    
-                    {{-- Gallery --}}
-                    @if(isset($project->gallery) && count($project->gallery) > 0)
-                    <div class="mt-8">
-                        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">Project Gallery</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4" x-data="{ activeImage: null }">
-                            @foreach($project->gallery as $image)
-                            <div class="aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden cursor-pointer" @click="activeImage = '{{ asset('storage/' . $image) }}'">
-                                <img src="{{ asset('storage/' . $image) }}" alt="Project image" class="w-full h-full object-cover hover:opacity-90 transition">
-                            </div>
-                            @endforeach
-                            
-                            {{-- Modal --}}
-                            <div x-show="activeImage" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75" @click="activeImage = null" x-cloak>
-                                <div class="max-w-4xl w-full max-h-screen p-4" @click.stop>
-                                    <img :src="activeImage" class="max-h-full mx-auto" alt="Enlarged project image">
-                                    <button class="absolute top-4 right-4 bg-white rounded-full p-1 shadow-lg" @click="activeImage = null">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                    
                     {{-- Informasi tambahan dan testimoni --}}
                     <div class="border-t border-gray-200 dark:border-gray-700 pt-8 mt-8">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -306,32 +343,31 @@
                 </div>
             </div>
 
-            {{-- Expertise areas --}}
+            {{-- Project Features --}}
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                 <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
-                    Areas of Expertise
+                    Project Features
                 </h3>
                 <div class="space-y-3">
-                    @php
-                        $expertise = [
-                            'UI/UX Design' => 'Creating intuitive, user-friendly interfaces with modern design principles',
-                            'Responsive Development' => 'Building websites that work perfectly on all devices and screen sizes',
-                            'Performance Optimization' => 'Ensuring fast load times and smooth performance',
-                            'Backend Integration' => 'Connecting frontend interfaces with robust backend systems'
-                        ];
-                    @endphp
-                    
-                    @foreach($expertise as $area => $description)
-                        <div class="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900 transition">
-                            <h4 class="font-medium text-gray-800 dark:text-white">{{ $area }}</h4>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ $description }}</p>
+                    @if(isset($project->features) && !empty(trim($project->features)))
+                        <div class="prose max-w-none dark:prose-invert">
+                            {!! nl2br($project->features) !!}
                         </div>
-                    @endforeach
+                    @else
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-400">
+                            <li>Responsive design for optimal viewing on all devices</li>
+                            <li>Modern user interface with intuitive navigation</li>
+                            <li>Optimized performance and loading speed</li>
+                            <li>Secure data handling and user authentication</li>
+                            <li>Integration with third-party services</li>
+                        </ul>
+                    @endif
                 </div>
             </div>
+
         </div>
     </div>
 </div>

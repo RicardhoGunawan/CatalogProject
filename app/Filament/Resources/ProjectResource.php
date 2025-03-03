@@ -38,6 +38,13 @@ class ProjectResource extends Resource
                     ->directory('projects')
                     ->disk('public') // Pastikan disimpan di public disk
                     ->visibility('public'), // Pastikan gambar bisa diakses oleh publik
+                
+                FileUpload::make('gallery')
+                    ->label('Project Gallery')
+                    ->multiple()  // Mengizinkan unggah banyak gambar
+                    ->directory('projects/gallery')
+                    ->disk('public')
+                    ->visibility('public'),
 
                 Forms\Components\TextInput::make('url')
                     ->label('Project URL')
@@ -72,6 +79,10 @@ class ProjectResource extends Resource
                     ->searchable(),
 
                 ImageColumn::make('thumbnail'),
+
+                ImageColumn::make('gallery')
+                ->label('Gallery')
+                ->limit(3), // Tampilkan maksimal 3 gambar di tabel
 
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Category')
