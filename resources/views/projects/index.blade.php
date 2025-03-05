@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <style>
+    <!-- <style>
         .bg-pattern {
             background-size: 60px 60px;
             background-repeat: repeat;
@@ -13,7 +13,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-    </style>
+    </style> -->
 @endsection
 
 @section('content')
@@ -157,7 +157,7 @@
 
     <!-- Call to Action -->
     <div id="contact" class="container mx-auto px-4 py-12">
-        <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-xl p-8 text-white text-center"
+        <div class="bg-gradient-to-r from-blue-600 to-purple-500 rounded-xl shadow-xl p-8 text-white text-center"
             data-aos="fade-up">
             <h2 class="text-3xl font-bold mb-4">Ready to Start Your Project?</h2>
             <p class="text-xl mb-6 max-w-3xl mx-auto">Let's work together to create something amazing.</p>
