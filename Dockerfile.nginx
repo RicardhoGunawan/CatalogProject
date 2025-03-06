@@ -1,0 +1,11 @@
+FROM node:18-alpine AS tailwind
+WORKDIR /var/www
+
+COPY . .
+RUN npm install && npm run build
+
+FROM nginx:latest
+
+COPY . /var/www 
+COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=tailwind /var/www/public/build /var/www/public/build
