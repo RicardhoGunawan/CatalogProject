@@ -29,12 +29,11 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js" defer></script>
-
     @yield('styles')
 </head>
 
 <body class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white min-h-screen">
-    <header class="sticky top-0 z-50 transition-all duration-300">
+    <header class="sticky top-0 z-50 transition-all duration-300 bg-white dark:bg-gray-800 shadow-lg">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <a href="{{ route('home') }}" class="group flex items-center space-x-2">
@@ -55,7 +54,7 @@
                                 class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all duration-300 {{ request()->routeIs('home') ? 'w-full' : 'group-hover:w-full' }}"></span>
                         </li>
                         <li class="relative group">
-                            <a href="#projects"
+                            <a href="{{ route('projects.all') }}"
                                 class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 transition-colors duration-300">Projects</a>
                             <span
                                 class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 group-hover:w-full transition-all duration-300"></span>
@@ -66,7 +65,7 @@
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 group-hover:w-full transition-all duration-300"></span>
                         </li> -->
                         <li class="relative group">
-                            <a href="#"
+                            <a href="{{ route('contact') }}"
                                 class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 transition-colors duration-300">Contact</a>
                             <span
                                 class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 group-hover:w-full transition-all duration-300"></span>
@@ -169,7 +168,7 @@
                     <h3 class="text-xl font-bold mb-4">codingsalatiga</h3>
                     <p class="text-gray-400 dark:text-gray-400 mb-4">A showcase of my development work and projects.</p>
                     <div class="flex space-x-4 mt-4">
-                        <a href="#"
+                        <a href="https://github.com/RicardhoGunawan"
                             class="text-gray-400 dark:text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-700 dark:hover:bg-gray-800 rounded-full"
                             aria-label="GitHub">
                             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -178,21 +177,20 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </a>
-                        <a href="#"
+                        <a href="https://www.instagram.com/gunawan_ricardho"
                             class="text-gray-400 dark:text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-700 dark:hover:bg-gray-800 rounded-full"
                             aria-label="Instagram">
                             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M12.315 2c2.43 0 2.784.013 3.808.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
-                                    clip-rule="evenodd" />
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                             </svg>
                         </a>
-                        <a href="#"
+                        <a href="https://wa.me/6285355248056"
                             class="text-gray-400 dark:text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-700 dark:hover:bg-gray-800 rounded-full"
                             aria-label="Twitter">
                             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
-                                    d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                                    d="M19.05 4.91C17.18 3.03 14.69 2 12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.23 4.74 1.23 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.03zm-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.264 8.264 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.183 8.183 0 012.41 5.83c.01 4.54-3.69 8.23-8.22 8.23zm4.52-6.16c-.25-.12-1.47-.73-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43-.14-.01-.3-.01-.47-.01-.17 0-.45.06-.68.32-.23.25-.88.86-.88 2.09 0 1.23.89 2.42 1.01 2.59.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27z" />
                             </svg>
                         </a>
                     </div>
@@ -213,7 +211,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#projects"
+                            <a href="{{ route('projects.all') }}"
                                 class="text-gray-400 dark:text-gray-400 hover:text-white transition-colors hover:pl-1 inline-flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -223,7 +221,7 @@
                                 Projects
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#about"
                                 class="text-gray-400 dark:text-gray-400 hover:text-white transition-colors hover:pl-1 inline-flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
@@ -233,9 +231,9 @@
                                 </svg>
                                 About
                             </a>
-                        </li>
+                        </li> -->
                         <li>
-                            <a href="mailto:yourname@example.com"
+                            <a href="{{ route('contact') }}"
                                 class="text-gray-400 dark:text-gray-400 hover:text-white transition-colors hover:pl-1 inline-flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -251,7 +249,7 @@
                 <div data-aos="fade-up" data-aos-delay="300">
                     <h3 class="text-lg font-bold mb-4">Contact</h3>
                     <p class="text-gray-400 dark:text-gray-400 mb-4">Have a question or want to work together?</p>
-                    <a href="mailto:yourname@example.com"
+                    <a href="{{ route("contact") }}"
                         class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors inline-flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">

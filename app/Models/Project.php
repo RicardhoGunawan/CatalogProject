@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Project extends Model
 {
@@ -11,6 +12,7 @@ class Project extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'description',
         'features',
         'thumbnail',
@@ -26,8 +28,24 @@ class Project extends Model
         'completion_date' => 'date',
         'is_featured' => 'boolean',
         'gallery' => 'array', 
-
     ];
+
+    /**
+     * Set slug otomatis saat mengatur title
+     */
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
+
+    /**
+     * Override method getRouteKeyName untuk menggunakan slug sebagai route key
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function category()
     {

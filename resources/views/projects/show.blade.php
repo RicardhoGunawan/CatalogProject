@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 <div class="container mx-auto px-4 py-8">
     {{-- Header dengan breadcrumb dan tombol kembali --}}
@@ -29,16 +30,16 @@
                     <img src="{{ asset('storage/' . $project->thumbnail) }}" 
                          alt="{{ $project->title }}" 
                          class="w-full h-full object-cover group-hover:scale-105 transition duration-500 ease-in-out">
-                    @if($project->featured)
-                    <div class="absolute top-4 right-4">
-                        <span class="bg-yellow-400 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            Featured Project
-                        </span>
-                    </div>
-                    @endif
+                         @if($project->featured)
+                            <div class="absolute top-4 right-4">
+                                <div class="bg-yellow-400 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    {!! $project->featured !!}
+                                </div>
+                            </div>
+                        @endif
                 </div>
                 @else
                 <div class="h-96 bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900 dark:to-indigo-900 flex items-center justify-center">
@@ -51,7 +52,7 @@
                 <div class="p-8">
                     {{-- Bagian meta informasi --}}
                     <div class="flex flex-wrap items-center gap-3 mb-4">
-                        @if($project->category)
+                        @if($project->category->slug)
                             <span class="text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900 rounded-full px-3 py-1">{{ $project->category->name }}</span>
                         @endif
                         @if($project->completion_date)
@@ -98,7 +99,7 @@
                         <div>
                             {{-- Description tab --}}
                             <div x-show="activeTab === 'description'" class="prose max-w-none dark:prose-invert">
-                                {!! nl2br($project->description) !!}
+                                {!! $project->description !!}
                             </div>
 
                             <div x-show="activeTab === 'gallery'" x-cloak class="space-y-4">
@@ -310,7 +311,7 @@
 
                         @if ($relatedProjects->count())
                             @foreach ($relatedProjects as $relatedProject)
-                                <a href="{{ route('projects.show', $relatedProject->id) }}" class="block group">
+                                <a href="{{ route('projects.show', $relatedProject->slug) }}" class="block group">
                                     <div class="flex items-start space-x-3">
                                         <div class="flex-shrink-0">
                                             @if ($relatedProject->thumbnail)
@@ -328,8 +329,9 @@
                                                 {{ $relatedProject->title }}
                                             </h4>
                                             <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
-                                                {{ Str::limit($relatedProject->description, 50) }}
+                                                {!! Str::limit($relatedProject->description, 50) !!}
                                             </p>
+
                                         </div>
                                     </div>
                                 </a>
@@ -352,10 +354,11 @@
                     Project Features
                 </h3>
                 <div class="space-y-3">
-                    @if(isset($project->features) && !empty(trim($project->features)))
+                    @if(!empty($project->features))
                         <div class="prose max-w-none dark:prose-invert">
-                            {!! nl2br($project->features) !!}
+                            {!! $project->features !!}
                         </div>
+
                     @else
                         <ul class="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-400">
                             <li>Responsive design for optimal viewing on all devices</li>
@@ -367,7 +370,6 @@
                     @endif
                 </div>
             </div>
-
         </div>
     </div>
 </div>

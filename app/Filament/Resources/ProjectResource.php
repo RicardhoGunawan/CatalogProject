@@ -13,61 +13,113 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\RichEditor;
-
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    protected static ?string $navigationLabel = 'Projects';
+    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
+                // Section for Project Details
+                Forms\Components\Section::make('Project Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255)
+                            ->placeholder('Enter project title')
+                            ->helperText('The title of the project.'),
 
-                Forms\Components\TextInput::make('description')
-                    ->required(),
-                Forms\Components\RichEditor::make('features')
-                    ->required(),
+                        Forms\Components\RichEditor::make('description')
+                            ->required()
+                            ->toolbarButtons([
+                                'bold',
+                                'italic',
+                                'link',
+                                'blockquote',
+                                'bulletList',
+                                'orderedList',
+                            ])
+                            ->placeholder('Enter project description')
+                            ->helperText('A detailed description of the project.'),
 
-                FileUpload::make('thumbnail')
-                    ->image()
-                    ->directory('projects')
-                    ->disk('public') // Pastikan disimpan di public disk
-                    ->visibility('public'), // Pastikan gambar bisa diakses oleh publik
-                
-                FileUpload::make('gallery')
-                    ->label('Project Gallery')
-                    ->multiple()  // Mengizinkan unggah banyak gambar
-                    ->directory('projects/gallery')
-                    ->disk('public')
-                    ->visibility('public'),
+                        Forms\Components\RichEditor::make('features')
+                            ->required()
+                            ->toolbarButtons([
+                                'bold',
+                                'italic',
+                                'link',
+                                'blockquote',
+                                'bulletList',
+                                'orderedList',
+                            ])
+                            ->placeholder('Enter project features')
+                            ->helperText('List the key features of the project.'),
+                    ])
+                    ->columns(1),
 
-                Forms\Components\TextInput::make('url')
-                    ->label('Project URL')
-                    ->url()
-                    ->maxLength(255),
+                // Section for Media
+                Forms\Components\Section::make('Media')
+                    ->schema([
+                        FileUpload::make('thumbnail')
+                            ->image()
+                            ->directory('projects')
+                            ->disk('public')
+                            ->visibility('public')
+                            ->helperText('Upload a thumbnail image for the project.')
+                            ->required(),
 
-                Forms\Components\Select::make('category_id')
-                    ->label('Category')
-                    ->relationship('category', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                        FileUpload::make('gallery')
+                            ->label('Project Gallery')
+                            ->multiple()
+                            ->directory('projects/gallery')
+                            ->disk('public')
+                            ->visibility('public')
+                            ->helperText('Upload multiple images for the project gallery.'),
+                    ])
+                    ->columns(2),
 
-                Forms\Components\Textarea::make('technology')
-                    ->rows(4)
-                    ->placeholder('Pisahkan dengan koma atau enter')
-                    ->maxLength(1000),
-                
+                // Section for Additional Information
+                Forms\Components\Section::make('Additional Information')
+                    ->schema([
+                        Forms\Components\TextInput::make('url')
+                            ->label('Project URL')
+                            ->url()
+                            ->maxLength(255)
+                            ->placeholder('Enter project URL')
+                            ->helperText('The URL of the project (if applicable).'),
 
-                Forms\Components\DatePicker::make('completion_date'),
+                        Forms\Components\Select::make('category_id')
+                            ->label('Category')
+                            ->relationship('category', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->placeholder('Select a category')
+                            ->helperText('The category this project belongs to.'),
 
-                Forms\Components\Toggle::make('is_featured')
-                    ->label('Featured on Homepage'),
+                        Forms\Components\Textarea::make('technology')
+                            ->rows(4)
+                            ->placeholder('Pisahkan dengan koma atau enter')
+                            ->maxLength(1000)
+                            ->helperText('List the technologies used in this project.'),
+
+                        Forms\Components\DatePicker::make('completion_date')
+                            ->placeholder('Select completion date')
+                            ->helperText('The date when the project was completed.'),
+
+                        Forms\Components\Toggle::make('is_featured')
+                            ->label('Featured on Homepage')
+                            ->helperText('Toggle to feature this project on the homepage.'),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -76,38 +128,76 @@ class ProjectResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable()
+                    ->limit(50)
+                    ->tooltip('Project Title'),
 
-                ImageColumn::make('thumbnail'),
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->label('Thumbnail')
+                    ->circular(),
 
-                ImageColumn::make('gallery')
-                ->label('Gallery')
-                ->limit(3), // Tampilkan maksimal 3 gambar di tabel
+                Tables\Columns\ImageColumn::make('gallery')
+                    ->label('Gallery')
+                    ->stacked()
+                    ->limit(3)
+                    ->tooltip('Project Gallery'),
 
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Category')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('completion_date')
-                    ->date(),
+                    ->label('Completion Date')
+                    ->date('d M Y')
+                    ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_featured')
-                    ->boolean(),
+                    ->label('Featured')
+                    ->boolean()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Created At')
+                    ->dateTime('d M Y H:i')
                     ->sortable(),
             ])
             ->filters([
+                // Filter by Category
                 SelectFilter::make('category_id')
                     ->label('Category')
-                    ->relationship('category', 'name'),
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload(),
+
+                // Filter for Featured Projects
+                Filter::make('is_featured')
+                    ->label('Featured Projects')
+                    ->query(fn(Builder $query) => $query->where('is_featured', true)),
             ])
             ->actions([
+                // Edit Action
                 Tables\Actions\EditAction::make(),
+
+                // Delete Action
                 Tables\Actions\DeleteAction::make(),
+
+                // Custom Action: Toggle Featured Status
+                Tables\Actions\Action::make('feature')
+                    ->label('Feature')
+                    ->icon('heroicon-o-star')
+                    ->action(function (Project $record) {
+                        $record->is_featured = !$record->is_featured;
+                        $record->save();
+                    })
+                    ->requiresConfirmation()
+                    ->modalHeading('Feature Project')
+                    ->modalDescription('Are you sure you want to feature this project?')
+                    ->modalButton('Yes, feature it'),
             ])
             ->bulkActions([
+                // Bulk Delete Action
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
@@ -116,7 +206,9 @@ class ProjectResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            // Jika ada relasi lain, tambahkan di sini
+        ];
     }
 
     public static function getPages(): array
@@ -125,6 +217,13 @@ class ProjectResource extends Resource
             'index' => Pages\ListProjects::route('/'),
             'create' => Pages\CreateProject::route('/create'),
             'edit' => Pages\EditProject::route('/{record}/edit'),
+            // Jika ada custom page, tambahkan di sini
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        // Menampilkan jumlah proyek di navigation badge
+        return static::getModel()::count();
     }
 }

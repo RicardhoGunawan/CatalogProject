@@ -1,20 +1,5 @@
 @extends('layouts.app')
 
-@section('styles')
-    <!-- <style>
-        .bg-pattern {
-            background-size: 60px 60px;
-            background-repeat: repeat;
-        }
-
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-    </style> -->
-@endsection
 
 @section('content')
     <!-- Hero Section with Parallax Effect -->
@@ -77,7 +62,7 @@
                         class="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white">
                         <option value="">All Categories</option>
                         @foreach($categories as $category)
-                            <option value="{{ $category->name }}">{{ $category->name }}</option>
+                            <option value="{{ $category->slug }}">{{ $category->slug }}</option>
                         @endforeach
                     </select>
                     <select x-model="sortMethod" @change="filterProjects()"
@@ -96,9 +81,8 @@
     <div class="container mx-auto px-4 py-12">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($projects as $project)
-                <div class="project-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden 
-                                                                                    transition-transform ease-in-out duration-500 hover:shadow-xl transform hover:scale-105"
-                    data-title="{{ $project->title }}" data-category="{{ $project->category->name }}">
+                <div class="project-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform ease-in-out duration-500 hover:shadow-xl transform hover:scale-105"
+                    data-title="{{ $project->title }}" data-category="{{ $project->category->slug }}">
                     <div class="relative">
                         <img src="{{ $project->thumbnail ? asset('storage/' . $project->thumbnail) : asset('images/no-image.png') }}"
                             alt="{{ $project->title }}"
@@ -116,14 +100,14 @@
                     <div class="p-6">
                         <div class="flex justify-between items-start mb-3">
                             <span class="text-sm font-medium text-blue-600 bg-blue-100 rounded-full px-3 py-1">
-                                {{ $project->category->name }}
+                                {{ $project->category->slug}}
                             </span>
                             <span class="text-sm text-gray-500 dark:text-gray-400">
                                 {{ $project->completion_date->format('M Y') }}
                             </span>
                         </div>
                         <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $project->title }}</h3>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{{ $project->description }}</p>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{!! $project->description !!}</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             @foreach(explode(',', $project->technology) as $tech)
                                 <span
@@ -140,7 +124,7 @@
                                 </svg>
                                 <span class="ml-1 text-sm font-medium">{{ number_format($project->rating, 1) }}</span>
                             </div>
-                            <a href="{{ route('projects.show', $project->id) }}"
+                            <a href="{{ route('projects.show', $project->slug) }}"
                                 class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium flex items-center group">
                                 View Details
                                 <svg class="h-5 w-5 ml-1 transform transition-transform duration-300 ease-in-out group-hover:translate-x-1"
