@@ -19,6 +19,8 @@ services:
       - db
     networks:
       - laravel
+    volumes:
+      - storage_data:/var/www/storage/app/public/projects  # Pastikan nginx juga bisa membaca storage
 
   nginx:
     build: 
@@ -32,6 +34,8 @@ services:
       - app
     networks:
       - laravel
+    volumes:
+      - storage_data:/var/www/public/storage/projects  # Pastikan nginx juga bisa membaca storage
 
   db:
     image: mysql:latest
@@ -54,3 +58,4 @@ networks:
 
 volumes:
   mysql_data:
+  storage_data:  # Definisikan volume untuk storage

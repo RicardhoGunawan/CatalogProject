@@ -27,4 +27,6 @@ RUN /composer install
 # et permission Laravel
 RUN chmod -R 777 storage bootstrap/cache
 
+RUN php artisan storage:link
+
 CMD ["php-fpm"]
