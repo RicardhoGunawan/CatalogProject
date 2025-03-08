@@ -29,6 +29,40 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js" defer></script>
+
+    <!--hero Section style and for the script is below  -->
+    <style>
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+        
+    </style>
     @yield('styles')
 </head>
 
@@ -39,7 +73,8 @@
                 <a href="{{ route('home') }}" class="group flex items-center space-x-2">
                     <span
                         class="text-2xl font-bold text-blue-600 dark:text-blue-400 transition-transform duration-300 group-hover:scale-105 relative">
-                        <span class="text-gray-800 dark:text-white">coding</span>salatiga
+                        coding<span
+                            class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-yellow-500">salatiga</span>
                         <span
                             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 group-hover:w-full transition-all duration-300"></span>
                     </span>
@@ -124,7 +159,7 @@
                             </svg>
                             Home
                         </a>
-                        <a href="#projects"
+                        <a href="{{ route('projects.all') }}"
                             class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -133,7 +168,7 @@
                             </svg>
                             Projects
                         </a>
-                        <a href="#about"
+                        <!-- <a href="#about"
                             class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -141,8 +176,8 @@
                                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             About
-                        </a>
-                        <a href="mailto:yourname@example.com"
+                        </a> -->
+                        <a href="{{ route('contact') }}"
                             class="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -344,6 +379,33 @@
                 });
             });
         });
+    </script>
+
+    <script>
+        // script hero section Particle effect
+        function createParticle() {
+            const particles = document.getElementById('particles');
+            const particle = document.createElement('div');
+
+            particle.style.position = 'absolute';
+            particle.style.width = '2px';
+            particle.style.height = '2px';
+            particle.style.background = 'white';
+            particle.style.borderRadius = '50%';
+
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            particle.style.left = x + '%';
+            particle.style.top = y + '%';
+
+            particles.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 2000);
+        }
+
+        setInterval(createParticle, 100);
     </script>
 
     @yield('scripts')
