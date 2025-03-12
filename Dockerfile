@@ -1,11 +1,11 @@
-FROM node:18-alpine AS tailwind
+FROM node:22-alpine3.21 AS tailwind
 WORKDIR /var/www
 
 COPY . .
 RUN npm install && npm run build
 
 
-FROM php:8.3.1-fpm-alpine3.19
+FROM php:8.4-fpm-alpine3.21
 
 # dependensi 
 RUN apk add --no-cache icu-dev zip unzip libzip-dev 

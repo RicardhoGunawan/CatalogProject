@@ -20,7 +20,7 @@
         </div>
 
         <!-- Content -->
-        <div class="relative container mx-auto px-6 py-24">
+        <div class="relative container mx-auto px-6 py-24" data-aos="zoom-in-up">
             <div class="text-center space-y-6">
                 <div class="inline-block">
                     <h1 class="text-4xl md:text-6xl font-black text-white mb-2 relative">

@@ -24,7 +24,7 @@
 
         <div class="relative container mx-auto px-6 md:px-12 h-full flex flex-col md:flex-row items-center z-10">
             <!-- Left Content -->
-            <div class="flex-1 md:text-left space-y-8">
+            <div class="flex-1 md:text-left space-y-8" data-aos="fade-right">
                 <div class="space-y-4">
                     <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
                         coding<span
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="flex flex-wrap gap-6 mt-8">
-                    <a href="#projects"
+                    <a href="{{ route('projects.all') }}"
                         class="group relative inline-flex items-center justify-center overflow-hidden rounded-full p-4 px-8 py-3 font-medium text-indigo-600 shadow-xl transition duration-300 ease-out bg-white hover:ring-2 hover:ring-white">
                         <span
                             class="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-700"></span>
@@ -45,7 +45,7 @@
                         <span class="relative text-white">View Projects</span>
                     </a>
 
-                    <a href="#contact"
+                    <a href="{{ route('contact') }}"
                         class="relative inline-flex items-center justify-center overflow-hidden rounded-full p-4 px-8 py-3 font-medium text-white border-2 border-white/50 hover:border-white/100 transition duration-300 backdrop-blur-sm hover:backdrop-blur-lg">
                         Contact Me
                     </a>
@@ -53,7 +53,7 @@
             </div>
 
             <!-- Right Content -->
-            <div class="flex-1 flex justify-center md:justify-end mt-12 md:mt-0">
+            <div class="flex-1 flex justify-center md:justify-end mt-12 md:mt-0" data-aos="fade-left">
                 <div class="relative w-full max-w-lg">
                     <!-- Decorative Elements -->
                     <div

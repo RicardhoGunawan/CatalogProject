@@ -21,7 +21,7 @@
         </div>
 
         <!-- Content -->
-        <div class="relative container mx-auto px-6 py-24">
+        <div class="relative container mx-auto px-6 py-24" data-aos="zoom-in-up">
             <div class="text-center space-y-6">
                 <div class="inline-block">
                     <h1 class="text-4xl md:text-6xl font-black text-white mb-2 relative">
@@ -52,7 +52,7 @@
     <div class="container mx-auto px-4 py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <!-- Contact Form -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8" data-aos="fade-down">
                 <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Send Us a Message</h2>
 
                 <!-- Notifikasi Error -->
@@ -107,7 +107,7 @@
             </div>
 
             <!-- Contact Information -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8" data-aos="fade-down">
                 <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Contact Information</h2>
                 <div class="space-y-6">
                     <div class="flex items-start space-x-4">
@@ -160,7 +160,7 @@
     </div>
 
     <!-- Map Section -->
-    <div class="container mx-auto px-4 pb-16">
+    <div class="container mx-auto px-4 pb-16" data-aos="zoom-in-up">
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.715257714618!2d110.490314315355!3d-7.268031973784209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a85b5f2a5b5b5%3A0x5f0f5f0f5f0f5f0f!2sSalatiga%2C%20Central%20Java%2C%20Indonesia!5e0!3m2!1sen!2sus!4v1633084800000!5m2!1sen!2sus"
